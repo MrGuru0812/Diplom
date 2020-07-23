@@ -1,5 +1,6 @@
 function modalWindowOne() {
     const callBtn = document.querySelectorAll('.call-btn'),
+        popuContent = document.querySelector('.popup-content'),
         popupCall = document.querySelector('.popup-call');
     callBtn.forEach(item => {
         item.addEventListener('click', event => {
@@ -9,10 +10,10 @@ function modalWindowOne() {
     });
     popupCall.addEventListener('click', event => {
         let target = event.target;
-        if (target.classList.contains('popup')) {
+        if (target.classList.contains('popup-close')) {
             popupCall.style.display = 'none';
         } else {
-            target = target.closest('popup-call');
+            target = target.closest('.popup-content');
             if (!target) {
                 popupCall.style.display = 'none';
             }
