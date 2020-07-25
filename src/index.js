@@ -1,5 +1,5 @@
 
-import modalWindowTwo from './modules/ModalWindowTwo';
+import modalWindowTwo from './modules/modalWindowTwo';
 import modalWindowOne from './modules/modalWindowOne';
 import modalCheck from './modules/modalCheck';
 
