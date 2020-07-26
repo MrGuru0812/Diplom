@@ -1,6 +1,5 @@
 function modalWindowOne() {
     const callBtn = document.querySelectorAll('.call-btn'),
-        popuContent = document.querySelector('.popup-content'),
         popupCall = document.querySelector('.popup-call');
     callBtn.forEach(item => {
         item.addEventListener('click', event => {
