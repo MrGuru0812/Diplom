@@ -6,6 +6,7 @@ import modalConsultation from './modules/modalConsultation';
 import moduleAddSentence from './modules/moduleAddSentence';
 import accordion from './modules/accordion';
 import sendForm from './modules/sendForm';
+
 modalWindowOne();
 modalWindowTwo();
 modalCheck();
