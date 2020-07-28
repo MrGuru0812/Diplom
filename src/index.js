@@ -1,16 +1,17 @@
 
-import modalWindowTwo from './modules/modalWindowTwo';
-import modalWindowOne from './modules/modalWindowOne';
-import modalCheck from './modules/modalCheck';
-import modalConsultation from './modules/modalConsultation';
-import moduleAddSentence from './modules/moduleAddSentence';
-import accordion from './modules/accordion';
-import sendForm from './modules/sendForm';
+import accordionCalc from "./modules/accordionCalc";
+import moreBtn from "./modules/moreBtn";
+import accordionTwo from "./modules/accordion";
+import popupsAll from "./modules/popupsAll";
+import mySendFormCalc from "./modules/sendFormAll";
 
-modalWindowOne();
-modalWindowTwo();
-modalCheck();
-modalConsultation();
-moduleAddSentence();
-accordion();
-sendForm();
+//Аккардион - калькулятор
+accordionCalc();
+//Конпка больше
+moreBtn();
+//Отправка форм
+mySendFormCalc.start();
+//Аккардион - внизу
+accordionTwo();
+//Все попапы
+popupsAll();
