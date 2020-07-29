@@ -1,17 +1,13 @@
 
-import accordionCalc from "./modules/accordionCalc";
+import calc from "./modules/calcAccordion";
 import moreBtn from "./modules/moreBtn";
 import accordionTwo from "./modules/accordion";
-import popupsAll from "./modules/popupsAll";
+import popupsAll from "./modules/popupAll";
 import mySendFormCalc from "./modules/sendFormAll";
 
-//Аккардион - калькулятор
-accordionCalc();
-//Конпка больше
+
+calc();
 moreBtn();
-//Отправка форм
 mySendFormCalc.start();
-//Аккардион - внизу
 accordionTwo();
-//Все попапы
 popupsAll();

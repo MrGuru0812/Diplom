@@ -1,4 +1,4 @@
-const accordionCalc = () => {
+const calc = () => {
     const btn = document.querySelectorAll('.panel-heading'),
         btnAccordion = document.querySelectorAll(`a[data-parent="#accordion"]`),
         collapseOne = document.getElementById('collapseOne'),
@@ -69,4 +69,4 @@ const accordionCalc = () => {
 
 };
 
-export default accordionCalc;
+export default calc;

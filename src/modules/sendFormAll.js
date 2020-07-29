@@ -23,43 +23,9 @@ class SendFormCalc {
             inputDistance: document.querySelector('.distance'),
             calcResult: document.getElementById('calc-result'),
         };
-        //массив для ошибочных инпутов, вмещает уникальные эл., не повторяются
-        this.error = new Set();
+
+        this.error = new Set(); // для ошибочных инпутов, вмещает уникальные эл., не повторяются
     }
-    start() {
-        this.inputCheck();
-        this.maskPhoneUse();
-        this.calculator();
-        this.sendForm();
-    }
-
-    inputCheck() { //ввод. в инпут только цифры и кириллица
-        const input = document.querySelectorAll('input');
-        input.forEach(elem => {
-            elem.addEventListener('input', () => {
-                if (elem.name === 'user_name') {
-                    elem.value = elem.value.replace(/[^а-яё\s]/ig, '');
-                    elem.setAttribute('maxlength', '25');
-                }
-
-                if (elem.name === 'user_phone') {
-                    elem.setAttribute('maxlength', '18'); //ограничение на кол-во символов
-                }
-
-                if (elem.name === 'user_quest') { //'введите вопрос'
-                    elem.value = elem.value.replace(/[^a-zа-яё\s\d?!\.,:;]/ig, '');
-                    elem.setAttribute('maxlength', '120');
-                }
-                if (elem.matches('.distance')) {
-                    elem.value = elem.value.replace(/\D/, '');
-                    elem.setAttribute('maxlength', '10');
-                }
-
-            });
-
-        });
-    }
-
     maskPhoneUse() {
         const elemPhone = document.querySelectorAll('.phone-user');
         elemPhone.forEach(elem => {
@@ -95,19 +61,54 @@ class SendFormCalc {
             maskPhone();
         });
     }
+    start() {
+        this.inputCheck();
+        this.maskPhoneUse();
+        this.calculator();
+        this.sendForm();
+    }
+
+    inputCheck() { // только цифры и кириллица
+        const input = document.querySelectorAll('input');
+        input.forEach(elem => {
+            elem.addEventListener('input', () => {
+                if (elem.name === 'user_name') {
+                    elem.value = elem.value.replace(/[^а-яё\s]/ig, '');
+                    elem.setAttribute('maxlength', '25');
+                }
+
+                if (elem.name === 'user_phone') {
+                    elem.setAttribute('maxlength', '18'); //ограничение на кол-во символов
+                }
+
+                if (elem.name === 'user_quest') { //'введите вопрос'
+                    elem.value = elem.value.replace(/[^a-zа-яё\s\d?!\.,:;]/ig, '');
+                    elem.setAttribute('maxlength', '120');
+                }
+                if (elem.matches('.distance')) {
+                    elem.value = elem.value.replace(/\D/, '');
+                    elem.setAttribute('maxlength', '10');
+                }
+
+            });
+
+        });
+    }
+
+
 
     calculator() {
-        //calculator elem
+        //элементы калькулятора
         const calcResult = document.getElementById('calc-result'),
             sumpTwo = document.querySelector('.sumpTwo'),
-            formControl = document.querySelectorAll('.form-control'),
             formDiameterOne = document.querySelectorAll('.form-control')[0],
-            formNumberOne = document.querySelectorAll('.form-control')[1],
+            formControl = document.querySelectorAll('.form-control'),
             formDiameterTwo = document.querySelectorAll('.form-control')[2],
+            formNumberOne = document.querySelectorAll('.form-control')[1],
             formNumberTwo = document.querySelectorAll('.form-control')[3],
-            inputDistance = document.querySelector('.distance'),
             btnFour = document.querySelector('.btnFour'),
-            collapseFourId = document.getElementById('collapseFour');
+            collapseFourId = document.getElementById('collapseFour'),
+            inputDistance = document.querySelector('.distance');
 
         const myOnOffSwitchOne = document.getElementById('myonoffswitch'),
             myOnOffSwitchTwo = document.getElementById('myonoffswitch-two');
@@ -116,10 +117,10 @@ class SendFormCalc {
         }
         if (myOnOffSwitchOne.checked) { //если чекбокс включён
 
-            //1 колодец
+            //один колодец
             const chamberOne = () => {
                 sumpTwo.style.cssText = 'display: none';
-                calcResult.value = +this.obj.priseOne + 1000; //цена за днище
+                calcResult.value = +this.obj.priseOne + 1000; //цена за дно
 
                 formControl.forEach(elem => {
 
@@ -157,16 +158,16 @@ class SendFormCalc {
                 });
             };
             chamberOne();
-            //2 колодца
+            //два колодца
         }
 
         myOnOffSwitchOne.addEventListener('change', () => {
             if (myOnOffSwitchOne.checked) { //если чекбокс включён
 
-                //1 колодец
-                const chamberOne = () => {
+                //выбран превый колодец
+                const pitOne = () => {
                     sumpTwo.style.cssText = 'display: none';
-                    calcResult.value = +this.obj.priseOne + 1000; //цена за днище
+                    calcResult.value = +this.obj.priseOne + 1000; 
 
                     formControl.forEach(elem => {
 
@@ -198,13 +199,13 @@ class SendFormCalc {
                             }
                             //
                             this.obj.wellOne = calcResult.value;
-                            calcResult.value = +calcResult.value + 1000; //отображаем в примерной стоимости
+                            calcResult.value = +calcResult.value + 1000; //в примерную стоимость
 
                         });
                     });
                 };
-                chamberOne();
-                //2 колодца
+                pitOne();
+                //выбрано 2 колодца
             } else if (!myOnOffSwitchOne.checked) {
                 const chamberTwo = () => {
                     sumpTwo.style.display = 'block';
@@ -212,10 +213,9 @@ class SendFormCalc {
 
                     formControl.forEach(elem => {
                         elem.addEventListener('change', () => {
-                            //1 proviso
                             if (sumpTwo.style.display === 'block') {
                                 if (formDiameterOne.value === '1.4 метра' && formDiameterTwo.value === '1.4 метра') {
-                                    //1шт
+                                    //1
                                     if (formNumberOne.value === '1 штука') {
                                         if (formNumberTwo.value === '1 штука') {
                                             calcResult.value = 15000; //15000
@@ -225,7 +225,7 @@ class SendFormCalc {
                                             calcResult.value = (15000 * 50) / 100 + 15000; //22500
                                         }
                                     }
-                                    //2шт
+                                    //2
                                     if (formNumberOne.value === '2 штуки') {
                                         if (formNumberTwo.value === '1 штука') {
                                             calcResult.value = (15000 * 30) / 100 + 15000; //19500
@@ -235,7 +235,7 @@ class SendFormCalc {
                                             calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 15000; //27000
                                         }
                                     }
-                                    //3шт
+                                    //3
                                     if (formNumberOne.value === '3 штуки') {
                                         if (formNumberTwo.value === '1 штука') {
                                             calcResult.value = (15000 * 50) / 100 + 15000; //22500
@@ -246,11 +246,10 @@ class SendFormCalc {
                                         }
                                     }
                                 }
-                                //2 proviso
                                 if (formDiameterOne.value === '2 метра' && formDiameterTwo.value === '1.4 метра' ||
                             formDiameterOne.value === '1.4 метра' && formDiameterTwo.value === '2 метра') {
                                     this.elemDoc.calcResult.value = ((15000 * 20) / 100) + 15000; //18000
-                                    //1шт
+                                    //1
                                     if (formNumberOne.value === '1 штука') {
                                         if (formNumberTwo.value === '1 штука') {
                                             calcResult.value = 18000; //18000
@@ -260,7 +259,7 @@ class SendFormCalc {
                                             calcResult.value = (15000 * 50) / 100 + 18000; //25500
                                         }
                                     }
-                                    //2шт
+                                    //2
                                     if (formNumberOne.value === '2 штуки') {
                                         if (formNumberTwo.value === '1 штука') {
                                             this.elemDoc.calcResult.value = (15000 * 30) / 100 + 18000; //22500
@@ -281,10 +280,10 @@ class SendFormCalc {
                                         }
                                     }
                                 }
-                                //3 proviso
+
                                 if (formDiameterOne.value === '2 метра' && formDiameterTwo.value === '2 метра') {
                                     calcResult.value = ((15000 * 20) / 100) * 2 + 15000; //21000
-                                    //1шт
+                                    //1
                                     if (this.elemDoc.formNumberOne.value === '1 штука') {
                                         if (formNumberTwo.value === '1 штука') {
                                             calcResult.value = 21000; //21000
@@ -294,7 +293,7 @@ class SendFormCalc {
                                             calcResult.value = (15000 * 50) / 100 + 21000; //28500
                                         }
                                     }
-                                    //2шт
+                                    //2
                                     if (formNumberOne.value === '2 штуки') {
                                         if (formNumberTwo.value === '1 штука') {
                                             calcResult.value = (15000 * 30) / 100 + 21000; //25500
@@ -304,7 +303,7 @@ class SendFormCalc {
                                             calcResult.value = (((15000 * 30) / 100) + ((15000 * 50) / 100)) + 21000; //33000
                                         }
                                     }
-                                    //3шт
+                                    //3
                                     if (formNumberOne.value === '3 штуки') {
                                         if (formNumberTwo.value === '1 штука') {
                                             calcResult.value = (15000 * 50) / 100 + 21000; //28500
@@ -326,7 +325,7 @@ class SendFormCalc {
             }
         });
         //дно у колодца
-        const wellBottom = () => {
+        const wellFooter = () => {
             myOnOffSwitchTwo.addEventListener('change', () => {
                 if (myOnOffSwitchTwo.checked) {
                     if (sumpTwo.style.display === 'none') {
@@ -362,9 +361,9 @@ class SendFormCalc {
             });
 
         };
-        wellBottom();
+        wellFooter();
 
-        //очистка объекта от значений 2-го колодца (выбран 1 колодец)
+        //очистка объекта от значений
         const deletElemObj2 = () => {
             this.obj2.diameter2 = '';
             this.obj2.number2 = '';
@@ -390,8 +389,8 @@ class SendFormCalc {
                             this.obj2.diameter1 = elem.value;
                         } else if (elem === formNumberOne) {
                             this.obj2.number1 = elem.value;
-                        }
-                        deletElemObj2(); //очистка значений при 1 колодце
+                        } //очистка значений при 1 колодце
+                        deletElemObj2();
                     }
                 });
             });
@@ -427,13 +426,13 @@ class SendFormCalc {
             captureForm = document.querySelectorAll('.capture-form')[0],
             callForm = document.querySelectorAll('.capture-form')[1],
             discountForm = document.querySelectorAll('.capture-form')[2],
-            discountCalcForm = document.querySelectorAll('.capture-form')[5],
             checkForm = document.querySelectorAll('.capture-form')[3],
-            directorForm = document.querySelector('.director-form'),
+            discountCalcForm = document.querySelectorAll('.capture-form')[5],
             consultationForm = document.querySelectorAll('.capture-form')[4],
-            popupCall = document.querySelector('.popup-call'),
+            directorForm = document.querySelector('.director-form'),
             popupDiscount = document.querySelector('.popup-discount'),
             popupDiscountCalc = document.querySelector('.popup-discount-calculation'),
+            popupCall = document.querySelector('.popup-call'),
             popupCheck = document.querySelector('.popup-check'),
             popupConsultation = document.querySelector('.popup-consultation');
 
